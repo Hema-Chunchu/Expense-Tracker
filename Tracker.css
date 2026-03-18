@@ -1,0 +1,113 @@
+body{
+      font-family: "Noto Sans", sans-serif;
+}
+.header{
+    background-color: blue;
+    color:white;
+    padding-left: 30px;
+    font-size: 25px;
+}
+.input-form{
+    display:flex;
+    justify-content:space-around;
+    width:95%;
+    margin:auto;
+    margin-top: 20px;
+    padding: 20px 0px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 5px rgb(190, 190, 232);
+    
+}
+#add-button{
+    background-color: blue;
+    color:white;
+    width:45px;
+    height:45px;
+    font-weight:700;
+    border-radius:50%;
+}
+.inputs{
+    width:27%;
+}
+.cards{
+    display:flex;
+    width:95%;
+    margin:auto;
+    justify-content: space-between;
+}
+.card{
+    background-color: #476EF7;
+    color:white;
+    width: 18rem;
+    border:0px;
+}
+.card-body{
+    height:150px;
+}
+.transaction-table{
+    width:95%;
+    margin:auto;
+    border:1px solid black;
+    border-radius: 8px;
+    overflow: hidden;
+    font-weight: 700;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+    padding:0px;
+} 
+#transaction-header{
+    background-color: #476EF7;
+}
+#transaction-header th{
+    padding:15px 15px;
+    color:white;
+}/* Tables does not have margin top and margin bottom for td,tr*/
+.delete-button
+{
+    background-color:red;
+    width: 45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    padding:0;
+}
+.delete-button:hover{
+    opacity: 0.75;
+}
+.delete-button:active{
+    background-color: red;
+    transform: scale(0.93);
+}
+
+@media only screen and (max-width: 768px) {
+    .header{
+        width:100%;
+    }
+    .input-form{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        gap:15px;
+    }
+    .inputs{
+        width:75%;
+    }
+    #add-button{
+        background-color: rgb(83, 83, 219);
+        color:white;
+        width: 75%;
+        height: 40px;
+        border-radius:8px;
+    }
+    .cards{
+        flex-wrap:wrap;
+        gap:10px;
+    }
+    .card{
+       width:180px;
+       height: 175px;
+    }
+    #transaction-header th{
+        padding:10px 10px;
+        color:white;
+    }
+}

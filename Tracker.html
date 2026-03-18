@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./Tracker.css" >
+  </head>
+  <body>
+   <!---Heading section-->
+    <div class="header">
+        <p class="m-0">Expense<br>Tracker <img src="./expense_tracker.png" width="35px" height="35px" style="border-radius: 20px;"></p>
+    </div>
+
+    <!--Input section-->
+    <div class="input-form">
+        <div class="form-floating inputs">
+            <input type="date" class="form-control dateInput" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Date</label>
+        </div>
+        <div class="form-floating inputs">
+            <input type="number" class="form-control amountInput" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Amount</label>
+        </div>
+        <select class="form-select inputs transactionInput" aria-label="Default select example" >
+            <option value="" disabled selected>Transcation Type</option> 
+            <option value="income" class="income">Income</option>
+            <option value="expenses" class="expenses">Expenses</option>
+        </select>
+        <button class=" btn" id="add-button" onclick="AddRow()">+</button>
+    </div>
+
+
+    <!-- Cards secction--->
+     <div class="cards mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="Total Income m-0">Total Income <img src="./income.png" width="39px" height="39px" style="border-radius:10px"></h5>
+                <h1 class="m-0 mt-3">
+                    <img src="./currency.png" width="40px" height="40px" style="border-radius:10px">
+                    <span id="totalincome">0</span>
+                </h1>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="Total Income m-0">Total Expenses <img src="./expenses.png" width="39px" height="39px"></h5>
+                <h1 class="m-0 mt-3">
+                    <img src="./currency.png" width="40px" height="40px" style="border-radius:10px">
+                    <span id="expenses">0</span>
+                </h1>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="Total Income m-0">Balance <img src="./balance.png" width="39px" height="39px"></h5>
+                <h1 class="m-0 mt-3">
+                    <img src="./currency.png" width="40px" height="40px" style="border-radius:10px">
+                    <span id="balance">0</span>
+                </h1>
+            </div>
+        </div>
+     </div>
+
+     <table class="transaction-table mt-3" id="table">
+        <thead>
+            <tr id ="transaction-header">
+                <th>Amount</th>
+                <th>Transcation Type</th>
+                <th>Transaction Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>            
+        </tbody>
+     </table>
+    
+    <script>
+        let table = document.getElementById('table');
+
+        function deleteRow(row){
+            row.remove();
+        }
+
+        function AddRow(){
+            let date = document.getElementsByClassName('dateInput')[0].value;
+            let amount = document.getElementsByClassName('amountInput')[0].value;
+            let transaction = document.getElementsByClassName('transactionInput')[0].value;
+
+
+            if(date.trim() == "" || amount.trim() == "" || transaction.trim() == "")
+                return;
+            //adding the new Elements
+            let row = document.createElement('tr');
+            let amountCell = document.createElement('td');
+            amountCell.innerText = amount;
+            row.appendChild(amountCell);
+
+            let transactionCell = document.createElement('td');
+            transactionCell.innerText = transaction;
+            row.appendChild(transactionCell);
+
+            let dateCell = document.createElement('td');
+            dateCell.innerText = date;
+            row.appendChild(dateCell);
+
+            let deleteCell = document.createElement('td');
+            let deleteButton = document.createElement('button');
+            let image = document.createElement('img');
+            image.src = './delete.png';
+            image.style.width = '45px';
+            image.style.height = '45px';
+            deleteButton.classList.add('delete-button');
+            deleteButton.appendChild(image);
+            deleteCell.appendChild(deleteButton);
+            row.append(deleteCell);
+            deleteButton.onclick = ()=> deleteRow(row);
+
+            // adding in cards
+            let totalIncome = document.getElementById('totalincome').innerText;
+            if(transaction == 'income'){
+                if(totalIncome == '0')
+                    totalIncome = amount;
+                else    
+                    totalIncome = parseInt(amount)+parseInt(totalIncome);
+                document.getElementById('totalincome').innerText = totalIncome;
+            }
+
+            let expenses_val = document.getElementById('expenses').innerText;
+            if(transaction == 'expenses'){
+                if(expenses_val == '0')
+                    expenses_val = amount;
+                else    
+                    expenses_val = parseInt(expenses_val)+parseInt(amount);
+                document.getElementById('expenses').innerText = expenses_val;
+            }
+            let balance_amount = document.getElementById('balance').innerText = parseInt(totalIncome)-parseInt(expenses_val);
+
+            table.append(row);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  </body>
+</html>
